@@ -98,6 +98,7 @@ RECENT REVISION HISTORY:
     Michaelangel007@github  Philipp Wiesemann  Dale Weiler        github:grim210
     Oriol Ferrer Mesia      Josh Tobin         Matthew Gregan     github:sammyhw
     Blazej Dariusz Roszkowski                  Gregory Mullen     github:phprus
+    Johannes Algelind
 
 */
 
@@ -6209,9 +6210,8 @@ static stbi_uc *stbi__process_gif_raster(stbi__context *s, stbi__gif *g)
          } else if (code <= avail) {
             if (first) return stbi__errpuc("no clear code", "Corrupt GIF");
 
-            if (oldcode >= 0) {
+            if (avail < 4096 && oldcode >= 0) {
                p = &g->codes[avail++];
-               if (avail > 4096)        return stbi__errpuc("too many codes", "Corrupt GIF");
                p->prefix = (stbi__int16) oldcode;
                p->first = g->codes[oldcode].first;
                p->suffix = (code == avail) ? p->first : g->codes[code].first;
